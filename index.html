@@ -1068,68 +1068,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 </script>
 <script src="https://balaodecora.shop/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.21.5" id="elementor-frontend-js"></script>
 <script src="https://balaodecora.shop/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.7.3" id="pro-elements-handlers-js"></script>
-
-<script>
-(function(){
-  const ua = navigator.userAgent;
-  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const isMobileUA = /Mobi|Android|iPhone|iPad/i.test(ua);
-  const isSmallScreen = screen.width <= 768;
-
-  // Bloqueia user-agents suspeitos
-  const agentes = ["HTTrack","WebCopy","curl","Wget","python","SaveWeb2Zip","Go-http-client","Puppeteer","node-fetch"];
-  if (agentes.some(agent => ua.includes(agent))) {
-    document.body.innerHTML = "<h1 style='color:red;text-align:center;'>Acesso negado 🚫</h1>";
-    throw new Error("Clonador detectado");
-  }
-
-  // Bloqueia acesso via iframe
-  if (window.top !== window.self) {
-    window.top.location = window.self.location;
-  }
-
-  // Bloqueia acesso não-mobile
-  if (!(isTouch && isMobileUA && isSmallScreen)) {
-    document.body.innerHTML = `
-      <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-family:sans-serif;text-align:center;padding:20px;">
-        <div>
-          <h1 style="font-size:2em;">🚫 Acesso bloqueado</h1>
-          <p>Este site só pode ser acessado por dispositivos móveis.</p>
-        </div>
-      </div>`;
-    throw new Error("Acesso por desktop bloqueado");
-  }
-
-  // Bloqueia clique direito
-  document.addEventListener("contextmenu", e => e.preventDefault());
-
-  // Bloqueia atalhos como F12, Ctrl+U, Ctrl+Shift+I/J/C
-  document.addEventListener("keydown", function(e){
-    if (
-      e.key === "F12" ||
-      (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-      (e.ctrlKey && e.key === "U")
-    ) {
-      e.preventDefault();
-      alert("Ação bloqueada!");
-      return false;
-    }
-  });
-
-  // Detecta uso do DevTools
-  setInterval(function(){
-    const start = performance.now();
-    debugger;
-    const end = performance.now();
-    if (end - start > 100) {
-      document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%;'>DevTools detectado. Página bloqueada. 🚫</h1>";
-      throw new Error("DevTools bloqueado");
-    }
-  }, 1000);
-})();
-</script>
-
-	
 	</body>
 </html>
 
